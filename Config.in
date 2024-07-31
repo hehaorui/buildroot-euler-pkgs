@@ -1,0 +1,3 @@
+source "$BR2_EXTERNAL_EULER_PKGS_PATH/package/etmem/Config.in"
+source "$BR2_EXTERNAL_EULER_PKGS_PATH/package/libboundscheck/Config.in"
+source "$BR2_EXTERNAL_EULER_PKGS_PATH/package/uthash/Config.in"

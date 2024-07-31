@@ -1,0 +1,5 @@
+config BR2_PACKAGE_LIBBOUNDSCHECK
+  bool "libboundscheck"
+  default n
+  help
+    libboundscheck is a library that provides bounds checking for C programs.

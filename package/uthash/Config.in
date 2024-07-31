@@ -1,0 +1,15 @@
+config BR2_PACKAGE_UTHASH
+  bool "uthash" 
+  default n
+  help
+    uthash is a hash table library in C.
+
+    https://troydhanson.github.io/uthash/
+
+    uthash is a hash table library in C. It is a single header file that
+    provides a hash table implementation. It is a very simple library
+    that is easy to use and provides a lot of functionality.
+
+    This package is used by the Euler project.
+
+    This package is not selected by default.
