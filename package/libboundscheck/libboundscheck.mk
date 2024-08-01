@@ -15,15 +15,15 @@ define LIBBOUNDSCHECK_BUILD_CMDS
 endef
 
 define LIBBOUNDSCHECK_INSTALL_STAGING_CMDS
-	$(INSTALL) -D -m 0755 $(@D)/lib/libboundscheck.so $(STAGING_DIR)/usr/local/lib/libboundscheck.so
-	$(INSTALL) -D -m 0644 $(@D)/include/securec.h $(STAGING_DIR)/usr/local/include/securec.h
-	$(INSTALL) -D -m 0644 $(@D)/include/securectype.h $(STAGING_DIR)/usr/local/include/securectype.h
+	$(INSTALL) -D -m 0755 $(@D)/lib/libboundscheck.so $(STAGING_DIR)/usr/lib/libboundscheck.so
+	$(INSTALL) -D -m 0644 $(@D)/include/securec.h $(STAGING_DIR)/usr/include/securec.h
+	$(INSTALL) -D -m 0644 $(@D)/include/securectype.h $(STAGING_DIR)/usr/include/securectype.h
 endef
 
 define LIBBOUNDSCHECK_INSTALL_TARGET_CMDS
-	$(INSTALL) -D -m 0755 $(@D)/lib/libboundscheck.so $(TARGET_DIR)/usr/local/lib/libboundscheck.so
-	# $(INSTALL) -D -m 0755 $(@D)/include/securec.h $(TARGET_DIR)/usr/local/include/securec.h
-	# $(INSTALL) -D -m 0755 $(@D)/include/securectype.h $(TARGET_DIR)/usr/local/include/securectype.h
+	$(INSTALL) -D -m 0755 $(@D)/lib/libboundscheck.so $(TARGET_DIR)/usr/lib/libboundscheck.so
+	# $(INSTALL) -D -m 0755 $(@D)/include/securec.h $(TARGET_DIR)/usr/include/securec.h
+	# $(INSTALL) -D -m 0755 $(@D)/include/securectype.h $(TARGET_DIR)/usr/include/securectype.h
 	
 endef
 

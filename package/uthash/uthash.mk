@@ -10,11 +10,11 @@ UTHASH_LICENSE_FILE = LICENSE
 UTHASH_INSTALL_STAGING = YES
 
 define UTHASH_INSTALL_STAGING_CMDS
-	$(INSTALL) -D -m 0644 -t $(STAGING_DIR)/usr/local/include/ $(@D)/src/*.h
+	$(INSTALL) -D -m 0644 -t $(STAGING_DIR)/usr/include/ $(@D)/src/*.h
 endef
 
 define UTHASH_INSTALL_TARGET_CMDS
-	$(INSTALL) -D -m 0644 -t $(TARGET_DIR)/usr/local/include/ $(@D)/src/*.h
+	$(INSTALL) -D -m 0644 -t $(TARGET_DIR)/usr/include/ $(@D)/src/*.h
 endef
 
 $(eval $(generic-package))
