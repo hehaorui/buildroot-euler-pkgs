@@ -1,15 +1,83 @@
---- a/etmem/CMakeLists.txt	2024-07-23 23:00:35.754062342 +0800
-+++ b/etmem/CMakeLists.txt	2024-07-31 17:27:12.162733127 +0800
-@@ -93,6 +93,12 @@ target_include_directories(etmemd_scan P
+--- a/etmem/CMakeLists.txt	2024-08-07 11:33:11.744794814 +0800
++++ b/etmem/CMakeLists.txt	2024-08-07 11:24:34.590378898 +0800
+@@ -93,71 +93,27 @@ target_include_directories(etmemd_scan P
   ${PROJECT_SOURCE_DIR}/inc/etmemd_inc
   ${GLIB2_INCLUDE_DIRS})
  
+-target_compile_options(etmemd PRIVATE -fsigned-char -fno-omit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wmissing-declarations -fno-strict-aliasing -Werror -Wformat -Wformat-security -D_GNU_SOURCE -fPIE -pie -fPIC -fstack-protector-strong -fno-common -DNDEBUG -O2 -D_FORTIFY_SOURCE=2 -Wall -Werror -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines -pthread -Wno-pointer-sign -Wstrict-prototypes -Wold-style-definition -std=gnu99)
+-
 +# remove -D_FORTIFY_SOURCE=1 from CMAKE_CFLAGS set by buildroot
 +separate_arguments(C_FLAGS_LIST UNIX_COMMAND "${CMAKE_C_FLAGS}")
 +list(REMOVE_ITEM C_FLAGS_LIST "-D_FORTIFY_SOURCE=1")
 +string(REPLACE ";" " " NEW_C_FLAGS "${C_FLAGS_LIST}")
 +set(CMAKE_C_FLAGS "${NEW_C_FLAGS}" CACHE STRING "Modified C flags" FORCE)
-+
- target_compile_options(etmemd PRIVATE -fsigned-char -fno-omit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wmissing-declarations -fno-strict-aliasing -Werror -Wformat -Wformat-security -D_GNU_SOURCE -fPIE -pie -fPIC -fstack-protector-strong -fno-common -DNDEBUG -O2 -D_FORTIFY_SOURCE=2 -Wall -Werror -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines -pthread -Wno-pointer-sign -Wstrict-prototypes -Wold-style-definition -std=gnu99)
  
+-if(CONFIG_DEBUG STREQUAL "y")
+- target_compile_options(etmemd PRIVATE -g)
+-endif()
++target_compile_options(etmemd PRIVATE -fsigned-char -fno-omit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wmissing-declarations -fno-strict-aliasing -Werror -Wformat -Wformat-security -D_GNU_SOURCE -fPIE -pie -fPIC -fstack-protector-strong -fno-common -DNDEBUG -O2 -D_FORTIFY_SOURCE=2 -Wall -Werror -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines -pthread -Wno-pointer-sign -Wstrict-prototypes -Wold-style-definition -std=gnu99)
  
+-set_target_properties(etmemd PROPERTIES LINK_FLAGS "-s -fPIE -pie -fPIC -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines")
++set_target_properties(etmemd PROPERTIES LINK_FLAGS "-fPIE -pie -fPIC -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines")
+ target_link_libraries(etmemd PRIVATE pthread dl rt boundscheck numa ${GLIB2_LIBRARIES})
+ 
+-if( ${ARCHITECTURE} STREQUAL "aarch64" )
+- target_compile_options(etmemd PRIVATE -march=armv8-a)
+-elseif( ${ARCHITECTURE} STREQUAL "loongarch64" )
+- target_compile_options(etmemd PRIVATE -march=loongarch64)
+-elseif( ${ARCHITECTURE} STREQUAL "riscv64" )
+- target_compile_options(etmemd PRIVATE -march=rv64gc)
+-elseif( ${ARCHITECTURE} STREQUAL "sw_64" )
+- target_compile_options(etmemd PRIVATE)
+-else()
+- target_compile_options(etmemd PRIVATE -march=core-avx-i -m64)
+-endif()
+-
+ target_compile_options(etmem PRIVATE -fsigned-char -fno-omit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wmissing-declarations -fno-strict-aliasing -Werror -Wformat -Wformat-security -D_GNU_SOURCE -fPIE -pie -fPIC -fstack-protector-strong -fno-common -DNDEBUG -O2 -D_FORTIFY_SOURCE=2 -Wall -Werror -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines -pthread -Wno-pointer-sign -Wstrict-prototypes -Wold-style-definition -std=gnu99)
+ 
+-if(CONFIG_DEBUG STREQUAL "y")
+- target_compile_options(etmem PRIVATE -g)
+-endif()
+-
+-set_target_properties(etmem PROPERTIES LINK_FLAGS "-s -fPIE -pie -fPIC -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines")
++set_target_properties(etmem PROPERTIES LINK_FLAGS "-fPIE -pie -fPIC -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines")
+ target_link_libraries(etmem PRIVATE pthread dl rt boundscheck)
+ 
+-if( ${ARCHITECTURE} STREQUAL "aarch64" )
+- target_compile_options(etmem PRIVATE -march=armv8-a)
+-elseif( ${ARCHITECTURE} STREQUAL "loongarch64" )
+- target_compile_options(etmemd PRIVATE -march=loongarch64)
+-elseif( ${ARCHITECTURE} STREQUAL "riscv64" )
+- target_compile_options(etmemd PRIVATE -march=rv64gc)
+-elseif( ${ARCHITECTURE} STREQUAL "sw_64" )
+- target_compile_options(etmemd PRIVATE)
+-else()
+- target_compile_options(etmem PRIVATE -march=core-avx-i -m64)
+-endif()
+-
+ target_compile_options(etmemd_scan PRIVATE -fsigned-char -fno-omit-frame-pointer -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wmissing-declarations -fno-strict-aliasing -Werror -Wformat -Wformat-security -D_GNU_SOURCE -fPIE -pie -fPIC -fstack-protector-strong -fno-common -DNDEBUG -O2 -D_FORTIFY_SOURCE=2 -Wall -Werror -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines -pthread -Wno-pointer-sign -Wstrict-prototypes -Wold-style-definition -std=gnu99 -fPIC -shared)
+ 
+-
+-if(CONFIG_DEBUG STREQUAL "y")
+- target_compile_options(etmemd_scan PRIVATE -g)
+-endif()
+-
+-set_target_properties(etmemd_scan PROPERTIES LINK_FLAGS "-s -fPIE -pie -fPIC -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines -Wl,--version-script=${ETMEMD_SRC_DIR}/etmemd_scan.version")
++set_target_properties(etmemd_scan PROPERTIES LINK_FLAGS "-fPIE -pie -fPIC -Wl,-z,relro,-z,now,-z,noexecstack -Wtrampolines -Wl,--version-script=${ETMEMD_SRC_DIR}/etmemd_scan.version")
+ target_link_libraries(etmemd_scan PRIVATE pthread dl rt boundscheck numa ${GLIB2_LIBRARIES})
+ 
+-if( ${ARCHITECTURE} STREQUAL "aarch64" )
+- target_compile_options(etmemd_scan PRIVATE -march=armv8-a)
+-elseif( ${ARCHITECTURE} STREQUAL "loongarch64" )
+- target_compile_options(etmemd_scan PRIVATE -march=loongarch64)
+-elseif( ${ARCHITECTURE} STREQUAL "riscv64" )
+- target_compile_options(etmemd PRIVATE -march=rv64gc)
+-elseif( ${ARCHITECTURE} STREQUAL "sw_64" )
+- target_compile_options(etmemd PRIVATE)
+-else()
+- target_compile_options(etmemd_scan PRIVATE -march=core-avx-i -m64)
+-endif()
+-
+ install(TARGETS etmem etmemd 
+         PERMISSIONS OWNER_READ OWNER_EXECUTE 
+         RUNTIME DESTINATION /usr/bin)
